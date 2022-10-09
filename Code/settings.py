@@ -135,8 +135,8 @@ MESSAGE_TAGS = {messages.ERROR : 'danger'}
 
 # Email stuff
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'v.srinath211@vit.edu'
+EMAIL_HOST_USER = 'emailtest1080@gmail.com'
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'v.srinath211@vit.edu'
+DEFAULT_FROM_EMAIL = 'emailtest1080@gmail.com'
 EMAIL_PORT = '587'
-EMAIL_HOST_PASSWORD = 'VOICESRI@108'
+EMAIL_HOST_PASSWORD = 'Emailtest@1080'
