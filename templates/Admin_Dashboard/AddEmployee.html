@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="{% url 'nadd-employee' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="username" id="UserNameField" placeholder="Employee Userame"> <br>
+        <div class="FeedbackArea text-sm  invalid_feedback invalid-feedback" style="display:none"></div>
+        <p class="text-sm text-success usernameSuccessOutput"></p>
+        <input type="email" name="email" id="EmailField" placeholder="Employee Email"><br>
+        <div class="EmailFeedbackArea invalid-feedback invalid_feedback" style="display:none"></div>
+        <input type="text" name="number" id="number" placeholder="Employee Number"><br>
+        <select name="department">
+            <option selected>Choose department</option>
+            {% for o in obj %}
+            <option  value="{{o.dept}}">{{o.dept}}</option>
+            {% endfor %}
+        </select><br>
+        <input type="date" name="date" id="date" placeholder="Employee joining date"><br>
+        <input type="password" name="password" id="PasswordField" placeholder="Password"><br>
+        <small class="showPasswordToggle" style="cursor:pointer;">SHOW</small><br>
+        <input type="submit" class="submit-btn" value="Add employee"><br>
+
+    </form>
+    <script src="{%  static 'js/AddEmployee.js' %} "></script>
+</body>
+</html>
