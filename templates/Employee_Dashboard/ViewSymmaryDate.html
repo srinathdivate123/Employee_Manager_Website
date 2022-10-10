@@ -1,0 +1,69 @@
+{% extends 'Employee_Dashboard/dashboard_base.html' %}
+{% block EmployeeDashboard %}
+{% load static %}
+
+<div class="wrapper">
+    <div class="main">
+        <main class="content">
+
+
+
+            <form action="{% url 'Ecall-date-filter' %}" method="POST">
+                {% csrf_token %}
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Search Task by date</h5>
+                    </div>
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="card-body col-8">
+                                <input type="date" max="{{maxdate}}"name="date" id="date" class="form-control" />
+                            </div>
+                            <div class="col-4" style="margin-top: 20px;">
+                                <input type="submit" class="submit-btn btn btn-primary" value="Search by date" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </form>
+            <div class="container-fluid p-0">
+
+                <div class="row">
+                    <div class="col-12 col-lg-12">
+                        <div class="row">
+                            <div style="width:350px">
+                                <canvas id="myChartFilter" width="400" height="400"></canvas>
+                            </div>
+                            
+                        </div>
+                        <div style="height:90px"></div>
+
+                        
+
+
+
+
+
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+            </div>
+        </main>
+
+
+    </div>
+</div>
+
+<script src="{% static 'js/ViewFilterTasks.js' %}"></script>
+
+
+{% endblock EmployeeDashboard %}

@@ -24,16 +24,74 @@ class EmailThread(threading.Thread):
 
 
 def DashboardView(request):
-    return render (request, 'Admin_Dashboard/Dashboard_Base.html')
+    if request.method=="GET":
+        emp = User.objects.filter(is_staff=False, is_active=True)
+
+        return render (request, 'Admin_Dashboard/Dashboard_Base.html', {'emp':emp})
+    if request.method=='POST':
+        
+        employee = request.POST['employee']
+        employee=str(employee)
+        request.session['employee'] = employee
+        maxdate = datetime.datetime.now()
+        maxdate = str(maxdate)
+        maxdate = maxdate[:10]
+        return render (request, 'Admin_Dashboard/Employee_Data.html',{'maxdate':maxdate})
+
+def ViewEmployeesTasksView(request):
+    if request.method=="GET":
+    
+        return render (request, 'Admin_Dashboard/View_Employees.html', {'emp':emp})
+    if request.method=='POST':
+        employee = request.POST['employee']
+        employee=str(employee)
+        request.session['employee'] = employee
+        maxdate = datetime.datetime.now()
+        maxdate = str(maxdate)
+        maxdate = maxdate[:10]
+        return render (request, 'Admin_Dashboard/Employee_Data.html',{'maxdate':maxdate})
+
+
 
 def AdminProfileView(request):
-    return render (request, 'Admin_Dashboard/Profile.html')
+    if request.method=="GET":
+        user = User.objects.get(username=request.user.username)
+        username = user.username
+        password = user.password
+        Email = user.email
+        print(Email)
+        pdb.set_trace()
+        
+        context = {
+             'username':username, 'password':password, 'email':Email
+        }
+
+        return render (request, 'Admin_Dashboard/Profile.html', context)
+    else:
+        oldname = request.session['username']
+        username = request.POST['username']
+        password=request.POST['password']
+        number=request.POST['number']
+        department = request.POST['department']
+        date = request.POST['date']
+        user = User.objects.get(username=oldname)
+        email = user.email
+        user.username = username
+        user.set_password(password)
+        user.first_name = number
+        user.last_name = department
+        user.save()
+        messages.success(request, 'Changes saved sucessfully!')
+        context = {'username':username, 'password':password, 'email':email}
+        return render (request, 'Admin_Dashboard/Profile.html', context)
+
 
 
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url='/authentication/login')
 def AddEmployeeView(request):
+    obj = Department.objects.all()
     if request.method == "POST":
         name = request.POST['username']
         email = request.POST['email']
@@ -41,6 +99,9 @@ def AddEmployeeView(request):
         department = request.POST['department'] 
         date = request.POST['date'] 
         password = request.POST['password'] 
+        if not name or not email or not number or not department or not date or not password:
+            messages.error(request, 'You must fill all the fields to add an employee!')
+            return render (request, 'Admin_Dashboard/AddEmployee.html', {'obj':obj})
         user = User.objects.create_user(username=name, email=email, first_name=number, last_name=department, date_joined=date )
         user.set_password(password)
         user.is_active = True
@@ -62,7 +123,7 @@ def AddEmployeeView(request):
         messages.success(request, 'Employee added successfully!')
         return redirect('nDashboard')
     if request.method=="GET":
-        obj = Department.objects.all()
+        
         return render (request, 'Admin_Dashboard/AddEmployee.html', {'obj':obj})
 
 
@@ -126,18 +187,7 @@ def ValidateEmployeeEmailView(request):
 
 
 
-def ViewEmployeesTasksView(request):
-    if request.method=="GET":
-        emp = User.objects.filter(is_staff=False)
-        return render (request, 'Admin_Dashboard/View_Employees.html', {'emp':emp})
-    if request.method=='POST':
-        employee = request.POST['employee']
-        employee=str(employee)
-        request.session['employee'] = employee
-        maxdate = datetime.datetime.now()
-        maxdate = str(maxdate)
-        maxdate = maxdate[:10]
-        return render (request, 'Admin_Dashboard/Employee_Data.html',{'maxdate':maxdate})
+
 
 
 
@@ -329,7 +379,18 @@ def AdminDateFilterView(request):
 def CallAdminDateFilterView(request):
     date = request.POST['date']
     request.session['date'] = date
-    return render (request, 'Admin_Dashboard/EMployee_Filter.html')
+    employee = request.session['employee']
+    return render (request, 'Admin_Dashboard/Employee_Filter.html',{'employee':employee,'maxdate':date})
         
 
-
+def DeactivateView(request):
+    emp = User.objects.filter(is_staff=False, is_active=True)
+    if request.method=="GET":
+        return render (request, 'Admin_Dashboard/Deactivate.html',{'emp':emp})
+    else:
+        employee= request.POST['employee']
+        user = User.objects.get(username=employee)
+        user.is_active=False
+        user.save()
+        messages.success(request, employee+' has been deactivated successfully')
+        return render (request, 'Admin_Dashboard/Deactivate.html',{'emp':emp})

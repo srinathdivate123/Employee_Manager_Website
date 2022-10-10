@@ -8,5 +8,6 @@ urlpatterns = [
     path('get_yest_tasks', views.GetYestTasksView, name='get_yest_tasks'),
     path('get_weekly_tasks', views.GetWeeklyTasksView, name='get_weekly_tasks'),
     path('employee-profile', views.EmployeeProfileView, name='nemployeeprofile'),
-    path('date-filter', views.DateFilterView, name='ndate-filter'),
+    path('Ecall-date-filter', views.CallDateFilterView, name='Ecall-date-filter'),
+    path('final', views.DateFilterView, name='final')
 ]

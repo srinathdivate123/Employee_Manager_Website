@@ -14,7 +14,8 @@ urlpatterns = [
     path('Aget_yest_tasks', views.AdminGetYestTasksView, name='Aget_yest_tasks'),
     path('Aget_weekly_tasks', views.AdminGetWeeklyTasksView, name='Aget_weekly_tasks'),
     path('Adate-filter', views.AdminDateFilterView, name='Adate-filter'),
-    path('call-Adate-filter', views.CallAdminDateFilterView, name='call-Adate-filter')
+    path('call-Adate-filter', views.CallAdminDateFilterView, name='call-Adate-filter'),
+    path('deactivate_employee', views.DeactivateView, name='deactivate_employee'),
     
     
 ]

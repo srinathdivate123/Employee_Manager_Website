@@ -9,7 +9,7 @@
             <div class="container-fluid p-0">
                 {% if emp %}
                 <div class="mb-3">
-                    <h1 class="h3 d-inline align-middle">Click on the employees below to view their tasks!</h1>
+                    <h1 class="h3 d-inline align-middle">Choose Employeee to Deactivate</h1>
                 </div>
 
                 
@@ -20,7 +20,7 @@
                             <br>
                             <div class="card-header">
                                 <h5 class="card-title mb-0">
-                                    <form action="{% url 'view_employee_tasks' %}" method="POST">
+                                    <form action="{% url 'deactivate_employee' %}" method="POST">
                                         {% csrf_token %}
                                         <input type="hidden" name="employee"value="{{e.username}}">
                                         <input type="submit" class="btn btn-primary"value="{{e.username}}">

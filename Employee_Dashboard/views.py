@@ -7,13 +7,51 @@ import datetime
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_control
+from django.contrib.auth.models import User
+from Admin_Dashboard.models import Department
+
+
 
 def dashboardView(request):
     task = Tasks.objects.filter(owner=request.user)
     return render (request, 'Employee_Dashboard/dashboard_base.html', {'task':task} )
 
 def EmployeeProfileView(request):
-    return render (request, 'Employee_Dashboard/profile.html')
+    dept = Department.objects.all()
+    if request.method=="GET":
+        user = User.objects.get(username=request.user.username)
+        username = user.username
+        request.session['username'] = username
+        password = user.password
+        number = user.first_name
+        department = user.last_name
+        email = user.email
+        date = user.date_joined
+        date = str(date)[:10]
+        context = {
+            'dept':dept, 'username':username, 'password':password, 'number':number, 'department':department, 'email':email, 'date':date
+        }
+
+        return render (request, 'Employee_Dashboard/profile.html', context)
+    else:
+        oldname = request.session['username']
+        username = request.POST['username']
+        password=request.POST['password']
+        number=request.POST['number']
+        department = request.POST['department']
+        date = request.POST['date']
+        user = User.objects.get(username=oldname)
+        email = user.email
+        user.username = username
+        user.set_password(password)
+        user.first_name = number
+        user.last_name = department
+        user.save()
+        messages.success(request, 'Changes saved sucessfully!')
+        context = {'dept':dept, 'username':username, 'password':password, 'number':number, 'department':department, 'email':email, 'date':date}
+        return render (request, 'Employee_Dashboard/profile.html', context)
+
+        
 
 
 
@@ -210,7 +248,7 @@ def DateFilterView(request):
     if request.method =='GET':
         return redirect('ndashboard')
     if request.method=='POST':
-        date = request.POST['date']
+        date = request.session['date']
         Ftasks = Tasks.objects.filter(owner=request.user, StartDate=date)
         Ffinalrep = {}
         def Fget_type(Ftasks):
@@ -226,6 +264,17 @@ def DateFilterView(request):
         for x in Ftasks:
             for y in Ftask_list:
                 Ffinalrep[y] = Fget_type_time(y)
-        print(Ffinalrep)
-        pdb.set_trace()
         return JsonResponse({'Ftype_time_data': Ffinalrep}, safe=False)
+
+def CallDateFilterView(request):
+    maxdate = datetime.datetime.now()
+    maxdate = str(maxdate)
+    maxdate = maxdate[:10]
+    if request.method=="GET":
+        return render(request, 'Employee_Dashboard/ViewSymmaryDate.html',{'maxdate':maxdate})
+    else:
+        date = request.POST['date']
+        request.session['date'] = date
+        return render(request, 'Employee_Dashboard/Final.html',{'maxdate':maxdate})
+        
+        

@@ -38,7 +38,7 @@ const renderFilterChart = (data, labels) => {
   };
   
   const getFilterChartData = () => {
-    fetch("Adate-filter")
+    fetch("final")
       .then((res) => res.json())
       .then((Fresults) => {
         console.log('Fresults', Fresults);
