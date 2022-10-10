@@ -104,4 +104,5 @@ def GetWeeklyTasksView(request):
             Wfinalrep[y] = Wget_type_time(y)
     return JsonResponse({'Wtype_time_data': Wfinalrep}, safe=False)
 
-
+def ProfileView(request):
+    return render (request,'pages-profile.html')
