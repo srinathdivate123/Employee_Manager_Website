@@ -50,18 +50,15 @@ def LoginView(request):
                     return redirect('nlogin')
         else:
             messages.error(request, 'Please fill all fields!')
-            return render(request, 'authentication/login.html')
+            return render(request, 'test.html')
 
 
 
 def LogoutView(request):
-    if request.method == "POST":
-        auth.logout(request)
-        messages.success(request, 'You have been logged out successfully!')
-        return redirect('nlogin')
-    else:
-        messages.error(request, 'You tried to access a prohibited url!!')
-        return redirect('nlogin')
+    auth.logout(request)
+    messages.success(request, 'You have been logged out successfully!')
+    return redirect('nlogin')
+    
         
                 
 def RequestPasswordResetEmail(request):

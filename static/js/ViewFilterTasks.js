@@ -1,12 +1,12 @@
-const renderYestChart = (data, labels) => {
-    var ctx = document.getElementById("myChartYest").getContext("2d");
-    var myChartYest = new Chart(ctx, {
+const renderFilterChart = (data, labels) => {
+    var ctx = document.getElementById("myChartFilter").getContext("2d");
+    var myChartFilter = new Chart(ctx, {
       type: "pie",
       data: {
         labels: labels,
         datasets: [
           {
-            label: "Yesterday's Tasks",
+            label: "Tasks",
             data: data,
             backgroundColor: [
               "rgba(255, 99, 132, 0.2)",
@@ -31,28 +31,28 @@ const renderYestChart = (data, labels) => {
       options: {
         title: {
           display: true,
-          text: "Yesterday's Tasks ",
+          text: "Tasks",
         },
       },
     });
   };
   
-  const getYestChartData = () => {
-    fetch("get_yest_tasks")
+  const getFilterChartData = () => {
+    fetch("date-filter")
       .then((res) => res.json())
-      .then((Yresults) => {
-       
-        const Ytasks_data = Yresults.Ytype_time_data;
-       
-        const [labels, data] = [
-          Object.keys(Ytasks_data),
-          Object.values(Ytasks_data),
-        ];
+      .then((Fresults) => {
+        console.log('Fresults', Fresults);
         
+        const Ftasks_data = Fresults.Ftype_time_data;
+        
+        const [labels, data] = [
+          Object.keys(Ftasks_data),
+          Object.values(Ftasks_data),
+        ];
   
-        renderYestChart(data, labels);
+        renderFilterChart(data, labels);
       });
   };
   
-  document.onload = getYestChartData();
+  document.onload = getFilterChartData();
   

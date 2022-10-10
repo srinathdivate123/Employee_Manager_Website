@@ -41,8 +41,9 @@ const renderTodayChart = (data, labels) => {
     fetch("get_today_tasks")
       .then((res) => res.json())
       .then((Tresults) => {
-        console.log("Tresults", Tresults);
+        
         const Ttasks_data = Tresults.Ttype_time_data;
+        
         const [labels, data] = [
           Object.keys(Ttasks_data),
           Object.values(Ttasks_data),

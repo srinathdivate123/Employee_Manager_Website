@@ -22,7 +22,10 @@ class EmailThread(threading.Thread):
 
 
 def DashboardView(request):
-    return render (request, 'Admin_Dashboard/Dashboard.html')
+    return render (request, 'Admin_Dashboard/Dashboard_Base.html')
+
+def AdminProfileView(request):
+    return render (request, 'Admin_Dashboard/Profile.html')
 
 
 
@@ -62,29 +65,29 @@ def AddEmployeeView(request):
 
 
 
-def SettingsView(request):
-    obj = Department.objects.all()
-    return render (request,'Admin_Dashboard/Settings.html', {'obj':obj})
+
 
 
 def AddDepartmentView(request):
+    obj = Department.objects.all()
     if request.method =="POST":
         department = request.POST['department']
+        if Department.objects.filter(dept=department).exists():
+            messages.error(request, 'The department \''+department+'\' already exists!')
+            return redirect('nadd-department')
         Department.objects.create(dept=department)
         messages.success(request, 'New department added successfully!')
-        return redirect('nsettings')
+        return redirect('nadd-department')
     else:
-        messages.error(request, 'You tried accessing a prohibited page')
-        return redirect('nDashboard')
+        return render (request, 'Admin_Dashboard/AddDepartment.html',{'obj':obj})
 
 def DeleteDepartmentView(request):
     if request.method=="POST":
         dept = request.POST['dept']
-        print(dept)
         obj = Department.objects.get(dept=dept)
         obj.delete()
         messages.success(request, 'Department deleted successfully!!')
-        return redirect('nsettings')
+        return redirect('nadd-department')
     else:
         messages.error(request, 'You tried accessing a prohibited page')
         return redirect('nDashboard')
@@ -98,7 +101,7 @@ def ValidateEmployeeUsernameView(request):
             return JsonResponse({'username_error': 'Username should only contain alphanumeric characters!'})
         exists = User.objects.filter(username=username).exists()
         if exists:
-            return JsonResponse({'username_error': 'Sorry! This username in use, choose another one!'})
+            return JsonResponse({'username_error': 'Sorry! This username is in use, choose another one!'})
         return JsonResponse({'username_valid': True})
     else:
         messages.error(request, 'You are accessing a prohibited page!!')
@@ -112,7 +115,7 @@ def ValidateEmployeeEmailView(request):
         if not validate_email(email):
             return JsonResponse({'email_error': 'Email is invalid'})
         if User.objects.filter(email=email).exists():
-            return JsonResponse({'email_error': 'Sorry email in use, choose another one'})
+            return JsonResponse({'email_error': 'Sorry, this email is in use, choose another one!'})
         return JsonResponse({'email_valid': True})
     else:
         messages.error(request, 'You tried accessing a prohibited page!!')
