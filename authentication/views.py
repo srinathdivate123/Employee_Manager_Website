@@ -25,7 +25,7 @@ class EmailThread(threading.Thread):
 
 def LoginView(request):
     if request.method=="GET":
-        return render(request, 'authentication/login.html')
+        return render(request, 'test.html')
     if request.method=="POST":
         username = request.POST['username']
         password = request.POST['password']

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
+
+</head>
+
+<body>
+  <h2>Dashboard of employee {{request.user.username}}</h2>
+  {% include 'messages.html'%}
+  <form action="{% url 'nadd-task' %}" method="GET">
+    <input type="submit" value="Add task" />
+  </form>
+  <form action="{% url 'nlogout' %}" method="POST">
+    {% csrf_token %}
+    <input class="text text-capitalize" type="submit" value="Sign Out" />
+  </form>
+
+
+
+
+  <div class="row">
+    <div style="width:400px">
+      <canvas id="myChartToday" width="400" height="400"></canvas>
+    </div>
+    <div style="width:100p"></div>
+    <div style="width:400px">
+      <canvas id="myChartYest" width="400" height="400"></canvas>
+    </div>
+
+  </div>
+  <div style="width:500px">
+    <canvas id="myChartWeekly" width="400" height="400"></canvas>
+  </div>
+
+  <script src="{% static 'js/ViewTodayTasks.js' %}"></script>
+  <script src="{% static 'js/ViewYestTasks.js' %}"></script>
+  <script src="{% static 'js/ViewWeeklyTasks.js' %}"></script>
+</body>
+
+</html>
