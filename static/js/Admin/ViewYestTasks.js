@@ -1,12 +1,12 @@
-const renderFilterChart = (data, labels) => {
-    var ctx = document.getElementById("myChartFilter").getContext("2d");
-    var myChartFilter = new Chart(ctx, {
+const renderYestChart = (data, labels) => {
+    var ctx = document.getElementById("myChartYest").getContext("2d");
+    var myChartYest = new Chart(ctx, {
       type: "pie",
       data: {
         labels: labels,
         datasets: [
           {
-            label: "Tasks",
+            label: "Yesterday's Tasks",
             data: data,
             backgroundColor: [
               "rgba(255, 99, 132, 0.2)",
@@ -31,28 +31,28 @@ const renderFilterChart = (data, labels) => {
       options: {
         title: {
           display: true,
-          text: "Tasks",
+          text: "Yesterday's Tasks ",
         },
       },
     });
   };
   
-  const getFilterChartData = () => {
-    fetch("Adate-filter")
+  const getYestChartData = () => {
+    fetch("Aget_yest_tasks")
       .then((res) => res.json())
-      .then((Fresults) => {
-        console.log('Fresults', Fresults);
-        
-        const Ftasks_data = Fresults.Ftype_time_data;
-        
+      .then((Yresults) => {
+       
+        const Ytasks_data = Yresults.Ytype_time_data;
+       
         const [labels, data] = [
-          Object.keys(Ftasks_data),
-          Object.values(Ftasks_data),
+          Object.keys(Ytasks_data),
+          Object.values(Ytasks_data),
         ];
+        
   
-        renderFilterChart(data, labels);
+        renderYestChart(data, labels);
       });
   };
   
-  document.onload = getFilterChartData();
+  document.onload = getYestChartData();
   

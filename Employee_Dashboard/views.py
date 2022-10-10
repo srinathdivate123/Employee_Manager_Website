@@ -1,3 +1,4 @@
+from logging import exception
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from . models import Tasks
@@ -49,8 +50,7 @@ def AddTaskView(request):
         return redirect('ndashboard')
 
 
-cache_control(no_cache=True, must_revalidate=True, no_store=True)
-@login_required(login_url='/authentication/login')
+
 def GetTodayTasksView(request):
     today = datetime.date.today()
     today = str(today)
@@ -72,8 +72,6 @@ def GetTodayTasksView(request):
     return JsonResponse({'Ttype_time_data': Tfinalrep}, safe=False)
 
 
-cache_control(no_cache=True, must_revalidate=True, no_store=True)
-@login_required(login_url='/authentication/login')
 def GetYestTasksView(request):
     yesterday = (datetime.date.today() - datetime.timedelta(1)).strftime('%Y-%m-%d')    
     Ytasks = Tasks.objects.filter(owner=request.user, StartDate=yesterday)
@@ -97,8 +95,7 @@ def GetYestTasksView(request):
 
 
 
-cache_control(no_cache=True, must_revalidate=True, no_store=True)
-@login_required(login_url='/authentication/login')
+
 def GetWeeklyTasksView(request):
     today = datetime.datetime.now()
     monday = str(today - datetime.timedelta(today.weekday()))[:10]

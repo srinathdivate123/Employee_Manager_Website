@@ -1,12 +1,12 @@
-const renderFilterChart = (data, labels) => {
-    var ctx = document.getElementById("myChartFilter").getContext("2d");
-    var myChartFilter = new Chart(ctx, {
+const renderTodayChart = (data, labels) => {
+    var ctx = document.getElementById("myChartToday").getContext("2d");
+    var myChartToday = new Chart(ctx, {
       type: "pie",
       data: {
         labels: labels,
         datasets: [
           {
-            label: "Tasks",
+            label: "Today's Tasks",
             data: data,
             backgroundColor: [
               "rgba(255, 99, 132, 0.2)",
@@ -31,28 +31,28 @@ const renderFilterChart = (data, labels) => {
       options: {
         title: {
           display: true,
-          text: "Tasks",
+          text: "Today's Tasks",
         },
       },
     });
   };
   
-  const getFilterChartData = () => {
-    fetch("Adate-filter")
+  const getTodayChartData = () => {
+    fetch("Aget_today_tasks")
       .then((res) => res.json())
-      .then((Fresults) => {
-        console.log('Fresults', Fresults);
+      .then((Tresults) => {
+        console.log('Tresults',Tresults)
         
-        const Ftasks_data = Fresults.Ftype_time_data;
+        const Ttasks_data = Tresults.Ttype_time_data;
         
         const [labels, data] = [
-          Object.keys(Ftasks_data),
-          Object.values(Ftasks_data),
+          Object.keys(Ttasks_data),
+          Object.values(Ttasks_data),
         ];
   
-        renderFilterChart(data, labels);
+        renderTodayChart(data, labels);
       });
   };
   
-  document.onload = getFilterChartData();
+  document.onload = getTodayChartData();
   
