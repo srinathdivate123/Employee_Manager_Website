@@ -22,10 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['SECRET_KEY']
+#SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ['DEBUG_STATUS']
+#DEBUG = os.environ['DEBUG_STATUS']
 
 ALLOWED_HOSTS = ['127.0.0.1', 'employeetasks.herokuapp.com']
 
@@ -84,11 +84,11 @@ WSGI_APPLICATION = 'Code.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ["DB_NAME"],
-        'USER' : os.environ["DB_USER"],
-        'PASSWORD' : os.environ["DB_PASSWORD"],
-        'HOST' : os.environ["DB_HOST"],
-        'PORT' : os.environ["DB_PORT"],
+        #'NAME': os.environ["DB_NAME"],
+        #'USER' : os.environ["DB_USER"],
+        #'PASSWORD' : os.environ["DB_PASSWORD"],
+        #'HOST' : os.environ["DB_HOST"],
+        #'PORT' : os.environ["DB_PORT"],
     }
 }
 
@@ -139,9 +139,9 @@ MESSAGE_TAGS = {messages.ERROR : 'danger'}
 
 
 # Email stuff
-EMAIL_HOST = os.environ["EMAIL_HOST"]
-EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
-EMAIL_USE_TLS = os.environ["EMAIL_USE_TLS"]
-DEFAULT_FROM_EMAIL = os.environ["DEFAULT_FROM_EMAIL"]
-EMAIL_PORT = os.environ["EMAIL_PORT"]
-EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
+#EMAIL_HOST = os.environ["EMAIL_HOST"]
+#EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
+#EMAIL_USE_TLS = os.environ["EMAIL_USE_TLS"]
+#DEFAULT_FROM_EMAIL = os.environ["DEFAULT_FROM_EMAIL"]
+#EMAIL_PORT = os.environ["EMAIL_PORT"]
+#EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
