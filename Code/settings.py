@@ -28,6 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 #DEBUG = os.environ['DEBUG_STATUS']
 
 ALLOWED_HOSTS = ['127.0.0.1', 'employeetasks.herokuapp.com']
+CSRF_TRUSTED_ORIGINS = ['https://employeetasks.herokuapp.com','http://127.0.0.1']
 
 
 # Application definition
