@@ -1,125 +1,76 @@
 {% extends 'Employee_Dashboard/dashboard_base.html' %}
 {% block EmployeeDashboard %}
 {% load static %}
-
-
-
-
-
-
-
-
-  <div class="wrapper">
-    <div class="main">
-
-
-      <main class="content">
-        <div class="container-fluid p-0">
-          <div class="mb-3">
-            <h1 class="h3 d-inline align-middle">Employee Profile</h1>
+<div class="col-12">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Employee Profile</h4>
+      <form class="form-sample" >
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Username</label>
+              <div class="col-sm-9">
+                <input disabled type="text" class="form-control" value="{{username}}" placeholder="Employee Username" />
+                
+              </div>
+            </div>
           </div>
-
-          <form action="{% url 'nemployeeprofile' %}" method="POST">
-            {% csrf_token %}
-
-            <div class="row">
-
-              <div class="col-12 col-lg-6">
-
-                <div class="card">
-                  <div class="card-header">
-                    <h5 class="card-title mb-0">Username</h5>
-                  </div>
-                  <div class="card-body">
-                    <input type="text" class="form-control" placeholder="Employee Username" value="{{username}}" name="username" id="UserNameField" />
-                  
-                  
-                </div>
-                </div>
-
-                <div class="card">
-                  <div class="card-header">
-                    <h5 class="card-title mb-0">Password (Hashed)</h5>
-                  </div>
-                  <div class="card-body">
-                    <input type="password" class="form-control" disabled placeholder="Password" value="{{password}}"name="password"
-                      id="PasswordField" />
-                  
-                    <small class="showPasswordToggle" style="cursor:pointer; float: right;">SHOW</small>
-                  </div>
-                </div>
-
-                <div class="card">
-                  <div class="card-header">
-                    <h5 class="card-title mb-0">Email</h5>
-                  </div>
-                  <div class="card-body">
-                    <input type="email" name="email" value="{{email}} " disabled id="EmailField" class="form-control" placeholder="Employee Email" />
-                    
-                  </div>
-                </div>
-
-                <div class="card">
-                  <div class="card-header">
-                    <h5 class="card-title mb-0">Contact Number</h5>
-                  </div>
-                  <div class="card-body">
-                    <input type="number" name="number" id="number" value="{{number}}" class="form-control" placeholder="Contact Number" />
-                  </div>
-                </div>
-
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Contact Number</label>
+              <div class="col-sm-9">
+                 <input disabled type="number" validate name="number" value="{{number}}" id="number" class="form-control"  />
               </div>
-
-              <div class="col-12 col-lg-6">
-
-                <div class="card">
-                  <div class="card-header">
-                    <h5 class="card-title mb-0">Department</h5>
-                  </div>
-                  <div class="card-body">
-                    
-                    <select class="form-select mb-3"  name="department">
-                        <option selected>{{department}}</option>
-                        {% for o in dept %}
-                        <option  value="{{o.dept}}">{{o.dept}}</option>
-                        {% endfor %}
-                    </select>
-                  </div>
-                </div>
-
-                <div class="card">
-                  <div class="card-header">
-                    <h5 class="card-title mb-0">Joining Date</h5>
-                  </div>
-                  <div class="card-body">
-                    <input type="date" name="date" id="date" value="{{date}}" class="form-control" />
-                  </div>
-
-                </div>
-
-                <div class="card-body text-center">
-                  <div class="mb-3">
-                    <input type="submit" class="submit-btn btn btn-primary" value="EDIT PROFILE" />
-                  </div>
-
-                </div>
-
-              </div>
-
-          </form>
-
+            </div>
+          </div>
         </div>
-      </main>
-
-
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Password (Hashed)</label>
+              <div class="col-sm-9">
+                <input disabled type="text" class="form-control" placeholder="Password" value="{{password}}"
+                    id="PasswordField" />
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Date of Joining</label>
+              <div class="col-sm-9">
+                <input disabled type="date" name="date" value="{{date}}" class="form-control" />
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Email</label>
+              <div class="col-sm-9">
+                <input disabled type="email" value="{{email}}" id="EmailField" class="form-control" placeholder="Employee Email" />
+                
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Department</label>
+              <div class="col-sm-9">
+                <input disabled type="email" value="{{department}}" id="EmailField" class="form-control" placeholder="Employee Email" />
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </form>
     </div>
   </div>
-
-  <script src="{%  static 'js/app.js' %}"></script>
-  <script src="{%  static 'js/AddEmployee.js' %}"></script>
-
-  
-
-
-
+</div>
+<script src="{%  static 'js/app.js' %}"></script>
+<script src="{%  static 'js/AddEmployee.js' %}"></script>
 {% endblock EmployeeDashboard %}

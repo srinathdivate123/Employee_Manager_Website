@@ -23,7 +23,7 @@ def EmployeeProfileView(request):
         username = user.username
         request.session['username'] = username
         password = user.password
-        number = user.first_name
+        number = user.id
         department = user.last_name
         email = user.email
         date = user.date_joined
@@ -34,21 +34,6 @@ def EmployeeProfileView(request):
 
         return render (request, 'Employee_Dashboard/profile.html', context)
     else:
-        oldname = request.session['username']
-        username = request.POST['username']
-        password=request.POST['password']
-        number=request.POST['number']
-        department = request.POST['department']
-        date = request.POST['date']
-        user = User.objects.get(username=oldname)
-        email = user.email
-        user.username = username
-        user.set_password(password)
-        user.first_name = number
-        user.last_name = department
-        user.save()
-        messages.success(request, 'Changes saved sucessfully!')
-        context = {'dept':dept, 'username':username, 'password':password, 'number':number, 'department':department, 'email':email, 'date':date}
         return render (request, 'Employee_Dashboard/profile.html', context)
 
         
@@ -85,7 +70,7 @@ def AddTaskView(request):
         Date = Date[:10]
         Tasks.objects.create(owner=request.user,StartDate=Date, Description=description, Type=type, StartTime=Datetime, TimeTaken=time)
         messages.success(request, "Task added successfully")
-        return redirect('ndashboard')
+        return redirect('nadd-task')
 
 
 
@@ -276,5 +261,3 @@ def CallDateFilterView(request):
         date = request.POST['date']
         request.session['date'] = date
         return render(request, 'Employee_Dashboard/Final.html',{'maxdate':maxdate})
-        
-        

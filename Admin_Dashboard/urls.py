@@ -16,6 +16,7 @@ urlpatterns = [
     path('Adate-filter', views.AdminDateFilterView, name='Adate-filter'),
     path('call-Adate-filter', views.CallAdminDateFilterView, name='call-Adate-filter'),
     path('deactivate_employee', views.DeactivateView, name='deactivate_employee'),
+    path('search_employee', csrf_exempt(views.SearchEmployeeView), name='search_employee'),
     
     
 ]
